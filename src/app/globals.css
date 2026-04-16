@@ -1,0 +1,260 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── CSS Custom Properties ────────────────────────────────────────────────── */
+:root {
+  --color-primary: #5C2D0E;
+  --color-secondary: #C47B3A;
+  --color-accent: #D4A017;
+  --color-cream: #FDF6EF;
+  --color-parchment: #F7ECD8;
+  --color-dark: #1A0800;
+  --color-text: #2C1A0E;
+
+  --font-heading: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Jost', system-ui, sans-serif;
+
+  --nav-height: 80px;
+}
+
+/* ── Base Styles ──────────────────────────────────────────────────────────── */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-cream);
+  color: var(--color-text);
+  overflow-x: hidden;
+}
+
+/* ── Typography ───────────────────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+/* ── Scrollbar ────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-cream);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-secondary);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
+}
+
+/* ── Selection ────────────────────────────────────────────────────────────── */
+::selection {
+  background: #C47B3A33;
+  color: var(--color-primary);
+}
+
+/* ── Component Classes ────────────────────────────────────────────────────── */
+@layer components {
+
+  /* Glass card */
+  .glass-card {
+    @apply bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl;
+    box-shadow: 0 8px 32px rgba(92, 45, 14, 0.12);
+  }
+
+  .glass-card-dark {
+    @apply bg-brand-900/30 backdrop-blur-md border border-white/10 rounded-2xl;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Section wrapper */
+  .section-padding {
+    @apply px-4 sm:px-6 lg:px-8 py-16 md:py-24;
+  }
+
+  .container-xl {
+    @apply max-w-7xl mx-auto;
+  }
+
+  /* Brand button primary */
+  .btn-primary {
+    @apply relative inline-flex items-center gap-2 px-8 py-3.5
+           bg-brand-800 text-cream font-jost font-medium text-sm
+           tracking-widest uppercase overflow-hidden
+           transition-all duration-300 hover:bg-brand-700
+           hover:shadow-luxury hover:-translate-y-0.5;
+  }
+
+  .btn-primary::after {
+    content: '';
+    @apply absolute inset-0 bg-shimmer opacity-0 transition-opacity duration-300;
+  }
+
+  .btn-primary:hover::after {
+    @apply opacity-100 animate-shimmer;
+  }
+
+  /* Brand button outline */
+  .btn-outline {
+    @apply inline-flex items-center gap-2 px-8 py-3.5
+           border border-brand-800 text-brand-800
+           font-jost font-medium text-sm tracking-widest uppercase
+           transition-all duration-300
+           hover:bg-brand-800 hover:text-cream hover:-translate-y-0.5;
+  }
+
+  /* Gold accent line */
+  .gold-line {
+    @apply block w-12 h-0.5 bg-gold-500;
+  }
+
+  /* Section label */
+  .section-label {
+    @apply text-xs font-jost font-medium tracking-[0.25em] uppercase text-brand-500;
+  }
+
+  /* Product card */
+  .product-card {
+    @apply relative overflow-hidden cursor-pointer;
+  }
+
+  /* Shimmer effect on loading */
+  .shimmer {
+    @apply relative overflow-hidden bg-brand-100;
+  }
+  .shimmer::after {
+    content: '';
+    @apply absolute inset-0 bg-shimmer animate-shimmer;
+  }
+
+  /* Nav link */
+  .nav-link {
+    @apply font-jost text-sm tracking-wider uppercase
+           text-brand-800 hover:text-brand-500
+           transition-colors duration-200 relative;
+  }
+  .nav-link::after {
+    content: '';
+    @apply absolute -bottom-0.5 left-0 w-0 h-px bg-brand-500
+           transition-all duration-300;
+  }
+  .nav-link:hover::after {
+    @apply w-full;
+  }
+
+  /* Marquee ticker */
+  .marquee-wrapper {
+    @apply overflow-hidden whitespace-nowrap;
+  }
+  .marquee-content {
+    @apply inline-block animate-marquee;
+  }
+
+  /* Image overlay hover */
+  .img-hover-overlay {
+    @apply absolute inset-0 bg-brand-gradient opacity-0
+           group-hover:opacity-60 transition-opacity duration-500;
+  }
+
+  /* Text gradient gold */
+  .text-gold-gradient {
+    background: linear-gradient(135deg, #D4A017 0%, #F5D680 50%, #D4A017 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Divider ornament */
+  .ornament-divider {
+    @apply flex items-center gap-4;
+  }
+  .ornament-divider::before,
+  .ornament-divider::after {
+    content: '';
+    @apply flex-1 h-px bg-gradient-to-r from-transparent via-gold-500 to-transparent;
+  }
+}
+
+/* ── Utilities ────────────────────────────────────────────────────────────── */
+@layer utilities {
+  .font-cormorant { font-family: 'Cormorant Garamond', Georgia, serif; }
+  .font-jost      { font-family: 'Jost', system-ui, sans-serif; }
+
+  .text-balance { text-wrap: balance; }
+
+  .perspective { perspective: 1200px; }
+
+  .will-change-transform { will-change: transform; }
+}
+
+/* ── Animations ───────────────────────────────────────────────────────────── */
+@keyframes shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ── Image zoom on hover ─────────────────────────────────────────────────── */
+.img-zoom {
+  transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.group:hover .img-zoom {
+  transform: scale(1.08);
+}
+
+/* ── Focus visible ────────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--color-secondary);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ── Mobile: remove focus ring on tap ────────────────────────────────────── */
+@media (hover: none) {
+  :focus { outline: none; }
+}
+
+/* ── Page transition ──────────────────────────────────────────────────────── */
+.page-enter {
+  animation: fadeInUp 0.5s ease-out forwards;
+}

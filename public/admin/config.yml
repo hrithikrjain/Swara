@@ -1,0 +1,225 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Decap CMS Configuration for Swara Ethnic Wear
+# Hosted on Cloudflare Pages | GitHub Backend | OAuth via Pages Functions
+# ─────────────────────────────────────────────────────────────────────────────
+
+backend:
+  name: github
+  repo: YOUR_GITHUB_USERNAME/swara-ethnic-wear   # ← Replace with your repo
+  branch: main                                    # ← Replace with your branch name
+  base_url: https://YOUR_SITE.pages.dev           # ← Replace with your Cloudflare Pages URL
+  auth_endpoint: /api/auth
+
+# Media uploads go to /public/images/uploads/
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+# Allow editorial workflow (draft → review → publish)
+publish_mode: editorial_workflow
+
+# ─────────────────────────────────────────────────────────────────────────────
+# COLLECTIONS
+# ─────────────────────────────────────────────────────────────────────────────
+
+collections:
+
+  # ── Products ─────────────────────────────────────────────────────────────
+  - name: "products"
+    label: "Products"
+    label_singular: "Product"
+    folder: "content/products"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    identifier_field: name
+    summary: "{{name}} — {{category}} — ₹{{price}}"
+    sortable_fields: ["name", "category", "price", "featured"]
+
+    fields:
+
+      - label: "Product Name"
+        name: "name"
+        widget: "string"
+        hint: "e.g. Rani Heritage Bridal Lehenga"
+
+      - label: "Slug (URL ID)"
+        name: "id"
+        widget: "string"
+        hint: "Unique URL-safe ID, e.g. rani-heritage-bridal-lehenga. No spaces."
+        pattern: ['^[a-z0-9-]+$', "Must be lowercase letters, numbers, and hyphens only"]
+
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options:
+          - { label: "Bridal", value: "Bridal" }
+          - { label: "Lehenga Choli", value: "Lehenga Choli" }
+          - { label: "Ethnic Kurti", value: "Ethnic Kurti" }
+          - { label: "Indo Western", value: "Indo Western" }
+          - { label: "Navratri", value: "Navratri" }
+
+      - label: "Price (₹)"
+        name: "price"
+        widget: "number"
+        value_type: "int"
+        min: 100
+        hint: "Price in Indian Rupees (without ₹ symbol)"
+
+      - label: "Original Price (₹) — for showing discount"
+        name: "originalPrice"
+        widget: "number"
+        value_type: "int"
+        required: false
+        hint: "Leave blank if no discount to show"
+
+      - label: "Short Description"
+        name: "description"
+        widget: "text"
+        hint: "2–3 sentences about the product. This appears on the product page."
+
+      - label: "Product Details (bullet points)"
+        name: "details"
+        widget: "list"
+        field:
+          label: "Detail"
+          name: "detail"
+          widget: "string"
+        hint: "Add key features like fabric, embroidery, inclusions, etc."
+
+      - label: "Product Images"
+        name: "images"
+        widget: "list"
+        allow_add: true
+        min: 1
+        max: 6
+        field:
+          label: "Image"
+          name: "image"
+          widget: "image"
+          media_library:
+            config:
+              multiple: false
+        hint: "Upload product images. First image is the main display image."
+
+      - label: "Badge Label"
+        name: "badge"
+        widget: "select"
+        required: false
+        options:
+          - { label: "None", value: "" }
+          - { label: "Bestseller", value: "Bestseller" }
+          - { label: "New Arrival", value: "New Arrival" }
+          - { label: "Trending", value: "Trending" }
+          - { label: "Hot Pick", value: "Hot Pick" }
+          - { label: "Exclusive", value: "Exclusive" }
+          - { label: "Premium", value: "Premium" }
+          - { label: "Artisan Pick", value: "Artisan Pick" }
+          - { label: "Festival Special", value: "Festival Special" }
+
+      - label: "Fabric"
+        name: "fabric"
+        widget: "string"
+        hint: "e.g. Pure Silk, Georgette, Chanderi"
+
+      - label: "Occasion Tags"
+        name: "occasion"
+        widget: "list"
+        field:
+          label: "Occasion"
+          name: "tag"
+          widget: "select"
+          options:
+            - Bridal
+            - Wedding
+            - Sangeet
+            - Reception
+            - Festival
+            - Navratri
+            - Garba
+            - Party
+            - Cocktail
+            - Office
+            - Casual
+            - Daily Wear
+            - Formal
+            - Summer
+
+      - label: "Available Colors"
+        name: "colors"
+        widget: "list"
+        field:
+          label: "Color"
+          name: "color"
+          widget: "string"
+        hint: "e.g. Deep Red, Gold, Ivory"
+
+      - label: "Available Sizes"
+        name: "sizes"
+        widget: "select"
+        multiple: true
+        options:
+          - { label: "XS", value: "XS" }
+          - { label: "S", value: "S" }
+          - { label: "M", value: "M" }
+          - { label: "L", value: "L" }
+          - { label: "XL", value: "XL" }
+          - { label: "XXL", value: "XXL" }
+          - { label: "Free Size", value: "Free Size" }
+          - { label: "Custom", value: "Custom" }
+
+      - label: "Featured on Homepage"
+        name: "featured"
+        widget: "boolean"
+        default: false
+        hint: "Show this product in the Featured section on the homepage"
+
+      - label: "Bestseller"
+        name: "bestSeller"
+        widget: "boolean"
+        default: false
+        hint: "Mark as bestseller — appears in the Bestsellers section"
+
+      - label: "In Stock"
+        name: "inStock"
+        widget: "boolean"
+        default: true
+
+  # ── Testimonials ──────────────────────────────────────────────────────────
+  - name: "testimonials"
+    label: "Testimonials"
+    folder: "content/testimonials"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    summary: "{{name}} — {{city}}"
+
+    fields:
+      - { label: "Customer Name", name: "name", widget: "string" }
+      - { label: "City", name: "city", widget: "string" }
+      - { label: "Role / Tag", name: "role", widget: "string", hint: "e.g. Bride, Regular Customer" }
+      - label: "Rating"
+        name: "rating"
+        widget: "select"
+        options:
+          - { label: "5 Stars", value: 5 }
+          - { label: "4 Stars", value: 4 }
+        default: 5
+      - { label: "Review", name: "review", widget: "text" }
+      - { label: "Product Purchased", name: "product", widget: "string", required: false }
+
+  # ── Site Settings ──────────────────────────────────────────────────────────
+  - name: "settings"
+    label: "Site Settings"
+    files:
+      - label: "Business Info"
+        name: "business"
+        file: "content/settings/business.json"
+        fields:
+          - { label: "Business Name", name: "name", widget: "string", default: "Swara Ethnic Wear" }
+          - { label: "Tagline", name: "tagline", widget: "string" }
+          - { label: "WhatsApp Number (with country code)", name: "whatsapp", widget: "string", hint: "e.g. 919876543210" }
+          - { label: "Phone", name: "phone", widget: "string" }
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Address", name: "address", widget: "text" }
+          - { label: "Store Hours", name: "hours", widget: "text" }
+          - { label: "Instagram Handle", name: "instagram", widget: "string", hint: "Without @ symbol" }
