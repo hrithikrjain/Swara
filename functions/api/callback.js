@@ -110,24 +110,28 @@ export async function onRequest(context) {
   </div>
   <script>
     (function() {
-      // Send token to parent Decap CMS window
-      function receiveMessage(e) {
-        window.opener.postMessage(
-          'authorization:github:success:${JSON.stringify({ token: accessToken, provider: 'github' }).replace(/'/g, "\\'")}',
-          e.origin
-        );
-      }
-      window.addEventListener('message', receiveMessage, false);
+  const message = {
+    token: '${accessToken}',
+    provider: 'github'
+  };
 
-      // Also send immediately if opener exists
-      if (window.opener) {
-        window.opener.postMessage(
-          'authorization:github:success:${JSON.stringify({ token: accessToken, provider: 'github' }).replace(/'/g, "\\'")}',
-          window.location.origin
-        );
-        setTimeout(() => window.close(), 1500);
-      }
-    })();
+  function sendMessage(targetOrigin) {
+    window.opener.postMessage(
+      'authorization:github:success:' + JSON.stringify(message),
+      targetOrigin
+    );
+  }
+
+  if (window.opener) {
+    // Try sending to same origin
+    sendMessage(window.location.origin);
+
+    // Also fallback (important for Decap)
+    sendMessage('*');
+
+    setTimeout(() => window.close(), 1000);
+  }
+})();
   </script>
 </body>
 </html>`;
