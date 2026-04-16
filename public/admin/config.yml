@@ -10,6 +10,8 @@ backend:
   base_url: https://swara-1yy.pages.dev           # ← Replace with your Cloudflare Pages URL
   auth_endpoint: /api/auth
 
+site_url: https://swara-1yy.pages.dev
+
 # Media uploads go to /public/images/uploads/
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
