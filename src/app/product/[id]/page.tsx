@@ -3,15 +3,15 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ChevronRight } from 'lucide-react';
 import ProductDetail from '@/components/ProductDetail';
-import { products, getProductById } from '@/lib/products';
+import { getAllProducts, getProductById } from '@/lib/content';
 
 interface Props {
   params: { id: string };
 }
 
-// Required for static export with dynamic routes
+// Required for static export with dynamic routes — reads from /content/products/*.md
 export function generateStaticParams() {
-  return products.map((p) => ({ id: p.id }));
+  return getAllProducts().map((p) => ({ id: p.id }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

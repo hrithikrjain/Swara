@@ -4,59 +4,19 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import AnimatedSection from './AnimatedSection';
 import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
+import type { Testimonial } from '@/lib/content';
 
-const testimonials = [
-  {
-    name: 'Priya Sharma',
-    city: 'Mumbai',
-    role: 'Bride',
-    rating: 5,
-    review:
-      'Swara made my wedding day absolutely magical. The bridal lehenga they crafted for me was beyond my imagination — every detail, every stitch was perfection. I received compliments throughout the day. Forever grateful! 🙏',
-    product: 'Rani Heritage Bridal Lehenga',
-    avatar: 'P',
-  },
-  {
-    name: 'Deepa Nair',
-    city: 'Bangalore',
-    role: 'Regular Customer',
-    rating: 5,
-    review:
-      'I\'ve been shopping at Swara for 3 years now and I can\'t imagine going anywhere else for ethnic wear. The quality is exceptional, the fabrics are luxurious, and the team is so helpful. My go-to store forever!',
-    product: 'Royal Chikankari Kurti',
-    avatar: 'D',
-  },
-  {
-    name: 'Kavya Patel',
-    city: 'Ahmedabad',
-    role: 'Festival Shopper',
-    rating: 5,
-    review:
-      'Bought the Garba Nite chaniya choli for Navratri and WOW! The mirror work, the quality, the flare of the skirt — absolutely divine. I danced all 9 nights comfortably. Everyone kept asking where I bought it from!',
-    product: 'Garba Nite Chaniya Choli',
-    avatar: 'K',
-  },
-  {
-    name: 'Ananya Mehta',
-    city: 'Delhi',
-    role: 'Fashion Enthusiast',
-    rating: 5,
-    review:
-      'The Indo-Western fusion set I ordered exceeded all expectations. The quality, stitching, and detailing are at par with high-end boutiques but at a fraction of the price. Swara is truly special!',
-    product: 'Fusion Dhoti Pant Co-ord Set',
-    avatar: 'A',
-  },
-  {
-    name: 'Ritu Joshi',
-    city: 'Pune',
-    role: 'Mother of the Bride',
-    rating: 5,
-    review:
-      'We ordered the entire bridal outfit set from Swara for my daughter\'s wedding. From the first consultation to the final delivery, everything was handled with such care and professionalism. Beautiful work!',
-    product: 'Shahi Dulhan Bridal Set',
-    avatar: 'R',
-  },
+const DEFAULT_TESTIMONIALS: Testimonial[] = [
+  { id: 't1', name: 'Priya Sharma', city: 'Mumbai', role: 'Bride', rating: 5, review: 'Swara made my wedding day absolutely magical. The bridal lehenga they crafted for me was beyond my imagination — every detail, every stitch was perfection. I received compliments throughout the day. Forever grateful! 🙏', product: 'Rani Heritage Bridal Lehenga', avatar: 'P' },
+  { id: 't2', name: 'Deepa Nair', city: 'Bangalore', role: 'Regular Customer', rating: 5, review: "I've been shopping at Swara for 3 years now and I can't imagine going anywhere else for ethnic wear. The quality is exceptional, the fabrics are luxurious, and the team is so helpful. My go-to store forever!", product: 'Royal Chikankari Kurti', avatar: 'D' },
+  { id: 't3', name: 'Kavya Patel', city: 'Ahmedabad', role: 'Festival Shopper', rating: 5, review: 'Bought the Garba Nite chaniya choli for Navratri and WOW! The mirror work, the quality, the flare of the skirt — absolutely divine. I danced all 9 nights comfortably. Everyone kept asking where I bought it from!', product: 'Garba Nite Chaniya Choli', avatar: 'K' },
+  { id: 't4', name: 'Ananya Mehta', city: 'Delhi', role: 'Fashion Enthusiast', rating: 5, review: 'The Indo-Western fusion set I ordered exceeded all expectations. The quality, stitching, and detailing are at par with high-end boutiques but at a fraction of the price. Swara is truly special!', product: 'Fusion Dhoti Pant Co-ord Set', avatar: 'A' },
+  { id: 't5', name: 'Ritu Joshi', city: 'Pune', role: 'Mother of the Bride', rating: 5, review: "We ordered the entire bridal outfit set from Swara for my daughter's wedding. From the first consultation to the final delivery, everything was handled with such care and professionalism. Beautiful work!", product: 'Shahi Dulhan Bridal Set', avatar: 'R' },
 ];
+
+interface TestimonialsSectionProps {
+  testimonials?: Testimonial[];
+}
 
 function StarRating({ count }: { count: number }) {
   return (
@@ -68,24 +28,25 @@ function StarRating({ count }: { count: number }) {
   );
 }
 
-export default function TestimonialsSection() {
+export default function TestimonialsSection({ testimonials = DEFAULT_TESTIMONIALS }: TestimonialsSectionProps) {
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);
+  const total = testimonials.length;
 
   const goNext = () => {
     setDirection(1);
-    setCurrent((prev) => (prev + 1) % testimonials.length);
+    setCurrent((prev) => (prev + 1) % total);
   };
 
   const goPrev = () => {
     setDirection(-1);
-    setCurrent((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+    setCurrent((prev) => (prev - 1 + total) % total);
   };
 
   useEffect(() => {
     const id = setInterval(goNext, 5000);
     return () => clearInterval(id);
-  }, []);
+  }, [total]);
 
   const t = testimonials[current];
 
@@ -127,7 +88,7 @@ export default function TestimonialsSection() {
 
               {/* Review */}
               <blockquote className="font-cormorant text-xl md:text-2xl text-cream font-light leading-relaxed italic mb-8">
-                "{t.review}"
+                &ldquo;{t.review}&rdquo;
               </blockquote>
 
               {/* Product badge */}
@@ -182,7 +143,7 @@ export default function TestimonialsSection() {
           </div>
         </div>
 
-        {/* Google rating strip */}
+        {/* Rating strip */}
         <AnimatedSection className="mt-12 text-center" delay={0.2}>
           <div className="inline-flex items-center gap-3 glass-card-dark px-6 py-3">
             <div className="flex">

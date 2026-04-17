@@ -3,6 +3,10 @@ import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
+import CartProviderWrapper from '@/components/CartProviderWrapper';
+import CartDrawer from '@/components/CartDrawer';
+import BackButton from '@/components/BackButton';
+import { getAnnouncements } from '@/lib/content';
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -54,6 +58,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const announcements = getAnnouncements();
+
   return (
     <html lang="en-IN">
       <head>
@@ -70,10 +76,14 @@ export default function RootLayout({
         <link rel="icon" href="/images/Logo.jpg" type="image/jpeg" />
       </head>
       <body className="bg-cream text-brand-900 antialiased">
-        <Navbar />
-        <main className="min-h-screen">{children}</main>
-        <Footer />
-        <WhatsAppButton />
+        <CartProviderWrapper>
+          <Navbar announcements={announcements} />
+          <BackButton />
+          <main className="min-h-screen">{children}</main>
+          <Footer />
+          <WhatsAppButton />
+          <CartDrawer />
+        </CartProviderWrapper>
       </body>
     </html>
   );

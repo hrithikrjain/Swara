@@ -1,0 +1,9 @@
+{
+  "items": [
+    { "id": "bridal",       "name": "Bridal",        "slug": "bridal",        "description": "Make your wedding day unforgettable",          "image": "/images/Bridal/bridal-1-front.jpeg" },
+    { "id": "lehenga-choli","name": "Lehenga Choli", "slug": "lehenga-choli", "description": "Timeless elegance for every celebration",       "image": "/images/Lehenga Choli/Lehenga-1.jpeg" },
+    { "id": "ethnic-kurti", "name": "Ethnic Kurti",  "slug": "ethnic-kurti",  "description": "Effortless grace, every single day",            "image": "/images/Ethnic Kurti/Kurti-3.jpeg" },
+    { "id": "indo-western", "name": "Indo Western",  "slug": "indo-western",  "description": "Where tradition meets contemporary",            "image": "/images/Indo Western/Indo-1-Front.jpeg" },
+    { "id": "navratri",     "name": "Navratri",      "slug": "navratri",      "description": "Dance, celebrate, dazzle",                       "image": "/images/Navratri/Navratri-1-Front.jpeg" }
+  ]
+}

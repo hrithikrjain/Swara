@@ -5,9 +5,9 @@
 
 backend:
   name: github
-  repo: hrithikrjain/Swara   # ← Replace with your repo
-  branch: main                                    # ← Replace with your branch name
-  base_url: https://swara-1yy.pages.dev           # ← Replace with your Cloudflare Pages URL
+  repo: hrithikrjain/Swara
+  branch: main
+  base_url: https://swara-1yy.pages.dev
   auth_endpoint: /api/auth
 
 site_url: https://swara-1yy.pages.dev
@@ -27,12 +27,12 @@ collections:
 
   # ── Products ─────────────────────────────────────────────────────────────
   - name: "products"
-    label: "Products"
+    label: "🛍️ Products"
     label_singular: "Product"
     folder: "content/products"
     create: true
     delete: true
-    slug: "{{slug}}"
+    slug: "{{fields.id}}"
     identifier_field: name
     summary: "{{name}} — {{category}} — ₹{{price}}"
     sortable_fields: ["name", "category", "price", "featured"]
@@ -48,7 +48,7 @@ collections:
         name: "id"
         widget: "string"
         hint: "Unique URL-safe ID, e.g. rani-heritage-bridal-lehenga. No spaces."
-        pattern: ['^[a-z0-9-]+$', "Must be lowercase letters, numbers, and hyphens only"]
+        pattern: ['^[a-z0-9-]+$', "Lowercase letters, numbers, hyphens only"]
 
       - label: "Category"
         name: "category"
@@ -77,7 +77,7 @@ collections:
       - label: "Short Description"
         name: "description"
         widget: "text"
-        hint: "2–3 sentences about the product. This appears on the product page."
+        hint: "2–3 sentences about the product."
 
       - label: "Product Details (bullet points)"
         name: "details"
@@ -86,7 +86,7 @@ collections:
           label: "Detail"
           name: "detail"
           widget: "string"
-        hint: "Add key features like fabric, embroidery, inclusions, etc."
+        hint: "Key features: fabric, embroidery, inclusions, etc."
 
       - label: "Product Images"
         name: "images"
@@ -98,10 +98,7 @@ collections:
           label: "Image"
           name: "image"
           widget: "image"
-          media_library:
-            config:
-              multiple: false
-        hint: "Upload product images. First image is the main display image."
+        hint: "First image is the main display image. You can use existing /images/... paths."
 
       - label: "Badge Label"
         name: "badge"
@@ -173,55 +170,181 @@ collections:
         name: "featured"
         widget: "boolean"
         default: false
-        hint: "Show this product in the Featured section on the homepage"
+        hint: "Shows in the Featured Collections section on homepage"
 
       - label: "Bestseller"
         name: "bestSeller"
         widget: "boolean"
         default: false
-        hint: "Mark as bestseller — appears in the Bestsellers section"
+        hint: "Shows in the Bestsellers section on homepage"
 
       - label: "In Stock"
         name: "inStock"
         widget: "boolean"
         default: true
 
-  # ── Testimonials ──────────────────────────────────────────────────────────
-  - name: "testimonials"
-    label: "Testimonials"
-    folder: "content/testimonials"
-    create: true
-    delete: true
-    slug: "{{slug}}"
-    summary: "{{name}} — {{city}}"
 
-    fields:
-      - { label: "Customer Name", name: "name", widget: "string" }
-      - { label: "City", name: "city", widget: "string" }
-      - { label: "Role / Tag", name: "role", widget: "string", hint: "e.g. Bride, Regular Customer" }
-      - label: "Rating"
-        name: "rating"
-        widget: "select"
-        options:
-          - { label: "5 Stars", value: 5 }
-          - { label: "4 Stars", value: 4 }
-        default: 5
-      - { label: "Review", name: "review", widget: "text" }
-      - { label: "Product Purchased", name: "product", widget: "string", required: false }
+  # ── Homepage Hero Slides ──────────────────────────────────────────────────
+  - name: "homepage"
+    label: "🏠 Homepage"
+    files:
+
+      - label: "Hero Slides (Top Carousel)"
+        name: "hero"
+        file: "content/data/hero-slides.json"
+        fields:
+          - label: "Slides"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.label}}"
+            min: 1
+            max: 6
+            fields:
+              - { label: "Slide ID", name: "id", widget: "string", hint: "Unique ID e.g. slide-1" }
+              - label: "Background Image"
+                name: "image"
+                widget: "image"
+                hint: "Use portrait/tall images for best desktop display"
+              - { label: "Category Label", name: "label", widget: "string", hint: "e.g. Bridal Collection" }
+              - label: "Headline"
+                name: "headline"
+                widget: "string"
+                hint: "Use \\n to split into two lines"
+              - { label: "Sub-headline", name: "sub", widget: "text" }
+              - { label: "Button Label", name: "ctaLabel", widget: "string", hint: "e.g. Explore Bridal" }
+              - { label: "Button Link", name: "ctaHref", widget: "string", hint: "e.g. /collections/bridal" }
+
+      - label: "Instagram Grid"
+        name: "instagram"
+        file: "content/data/instagram.json"
+        fields:
+          - label: "Grid Images"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.alt}}"
+            min: 4
+            max: 12
+            fields:
+              - { label: "ID", name: "id", widget: "string" }
+              - { label: "Image", name: "src", widget: "image" }
+              - { label: "Alt Text", name: "alt", widget: "string" }
+              - { label: "Caption", name: "caption", widget: "string", required: false }
+
+      - label: "Testimonials"
+        name: "testimonials"
+        file: "content/data/testimonials.json"
+        fields:
+          - label: "Testimonials"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.name}} — {{fields.city}}"
+            fields:
+              - { label: "ID", name: "id", widget: "string" }
+              - { label: "Customer Name", name: "name", widget: "string" }
+              - { label: "City", name: "city", widget: "string" }
+              - { label: "Role / Tag", name: "role", widget: "string", hint: "e.g. Bride, Regular Customer" }
+              - label: "Star Rating"
+                name: "rating"
+                widget: "select"
+                options:
+                  - { label: "5 Stars ⭐⭐⭐⭐⭐", value: 5 }
+                  - { label: "4 Stars ⭐⭐⭐⭐", value: 4 }
+                  - { label: "3 Stars ⭐⭐⭐", value: 3 }
+                default: 5
+              - { label: "Review Text", name: "review", widget: "text" }
+              - { label: "Product Purchased", name: "product", widget: "string", required: false }
+              - { label: "Avatar Letter", name: "avatar", widget: "string", hint: "Single letter shown as avatar, e.g. P for Priya" }
+
+
+  # ── Categories ────────────────────────────────────────────────────────────
+  - name: "categories"
+    label: "📂 Categories"
+    files:
+      - label: "All Categories"
+        name: "categories"
+        file: "content/data/categories.json"
+        fields:
+          - label: "Categories"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.name}}"
+            fields:
+              - { label: "ID", name: "id", widget: "string" }
+              - { label: "Category Name", name: "name", widget: "string" }
+              - { label: "Slug (URL path)", name: "slug", widget: "string", hint: "e.g. lehenga-choli" }
+              - { label: "Description", name: "description", widget: "text" }
+              - { label: "Hero Image", name: "image", widget: "image" }
+
+
+  # ── Pages ─────────────────────────────────────────────────────────────────
+  - name: "pages"
+    label: "📄 Pages"
+    files:
+
+      - label: "About Page"
+        name: "about"
+        file: "content/pages/about.json"
+        fields:
+          - { label: "Hero Image", name: "heroImage", widget: "image" }
+          - { label: "Page Headline", name: "headline", widget: "string" }
+          - { label: "Story Paragraph 1", name: "story1", widget: "text" }
+          - { label: "Story Paragraph 2", name: "story2", widget: "text" }
+          - { label: "Story Paragraph 3", name: "story3", widget: "text" }
+          - label: "Stats (Years / Products / Cities / etc.)"
+            name: "stats"
+            widget: "list"
+            summary: "{{fields.label}}"
+            fields:
+              - { label: "Number", name: "value", widget: "string" }
+              - { label: "Label", name: "label", widget: "string" }
+          - label: "Values / Pillars"
+            name: "values"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "desc", widget: "text" }
+              - { label: "Icon (emoji or name)", name: "icon", widget: "string" }
+          - label: "Store Images"
+            name: "storeImages"
+            widget: "list"
+            field:
+              label: "Image"
+              name: "image"
+              widget: "image"
+          - { label: "Visit CTA Title", name: "visitCtaTitle", widget: "string" }
+          - { label: "Visit CTA Body Text", name: "visitCtaText", widget: "text" }
+
 
   # ── Site Settings ──────────────────────────────────────────────────────────
   - name: "settings"
-    label: "Site Settings"
+    label: "⚙️ Site Settings"
     files:
-      - label: "Business Info"
+
+      - label: "Business Info & Contact"
         name: "business"
         file: "content/settings/business.json"
         fields:
-          - { label: "Business Name", name: "name", widget: "string", default: "Swara Ethnic Wear" }
+          - { label: "Business Name", name: "name", widget: "string" }
           - { label: "Tagline", name: "tagline", widget: "string" }
-          - { label: "WhatsApp Number (with country code)", name: "whatsapp", widget: "string", hint: "e.g. 919876543210" }
-          - { label: "Phone", name: "phone", widget: "string" }
+          - { label: "WhatsApp Number (with country code)", name: "whatsapp", widget: "string", hint: "e.g. 919876543210 — no + or spaces" }
+          - { label: "Phone (display)", name: "phone", widget: "string", hint: "e.g. +91 98765 43210" }
           - { label: "Email", name: "email", widget: "string" }
-          - { label: "Address", name: "address", widget: "text" }
+          - { label: "Store Address", name: "address", widget: "text" }
           - { label: "Store Hours", name: "hours", widget: "text" }
           - { label: "Instagram Handle", name: "instagram", widget: "string", hint: "Without @ symbol" }
+
+      - label: "Announcement Bar"
+        name: "announcements"
+        file: "content/settings/announcements.json"
+        fields:
+          - label: "Announcements (ticker bar at top)"
+            name: "items"
+            widget: "list"
+            min: 1
+            max: 8
+            field:
+              label: "Announcement Text"
+              name: "text"
+              widget: "string"
+            hint: "These rotate in the ticker bar at the top of every page"

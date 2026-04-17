@@ -4,7 +4,8 @@ import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronDown, Search, Heart } from 'lucide-react';
+import { Menu, X, ChevronDown, ShoppingBag } from 'lucide-react';
+import { useCart } from '@/context/CartContext';
 
 const navLinks = [
   { label: 'Home', href: '/' },
@@ -23,12 +24,24 @@ const navLinks = [
   { label: 'Contact', href: '/contact' },
 ];
 
-export default function Navbar() {
+interface NavbarProps {
+  announcements?: string[];
+}
+
+const DEFAULT_ANNOUNCEMENTS = [
+  'Free Delivery on Orders Above ₹2,000',
+  'Custom Stitching Available',
+  'WhatsApp for Styling Help: +91 98765 43210',
+];
+
+export default function Navbar({ announcements = DEFAULT_ANNOUNCEMENTS }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
   const dropdownTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const { openCart, totalItems } = useCart();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -36,7 +49,6 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setMobileOpen(false);
   }, []);
@@ -50,14 +62,18 @@ export default function Navbar() {
     dropdownTimer.current = setTimeout(() => setActiveDropdown(null), 150);
   };
 
+  /* Build ticker text from announcements array */
+  const tickerText = announcements
+    .map((a) => `✦ ${a}`)
+    .join(' \u00A0\u00A0\u00A0');
+  const repeated = `${tickerText} \u00A0\u00A0\u00A0${tickerText} \u00A0\u00A0\u00A0`;
+
   return (
     <>
       {/* Announcement Bar */}
       <div className="bg-brand-800 text-cream text-center py-2 px-4 text-xs font-jost tracking-[0.2em] uppercase overflow-hidden">
         <div className="marquee-wrapper">
-          <div className="marquee-content">
-            ✦ Free Delivery on Orders Above ₹2,000 &nbsp;&nbsp;&nbsp;✦ Custom Stitching Available &nbsp;&nbsp;&nbsp;✦ WhatsApp for Styling Help: +91 98765 43210 &nbsp;&nbsp;&nbsp;✦ Free Delivery on Orders Above ₹2,000 &nbsp;&nbsp;&nbsp;✦ Custom Stitching Available &nbsp;&nbsp;&nbsp;✦ WhatsApp for Styling Help: +91 98765 43210 &nbsp;&nbsp;&nbsp;
-          </div>
+          <div className="marquee-content">{repeated}</div>
         </div>
       </div>
 
@@ -147,34 +163,59 @@ export default function Navbar() {
 
           {/* Desktop Actions */}
           <div className="hidden lg:flex items-center gap-4">
+            {/* Cart icon */}
             <button
-              className="text-brand-700 hover:text-brand-500 transition-colors duration-200"
-              aria-label="Search"
+              onClick={openCart}
+              className="relative text-brand-700 hover:text-brand-500 transition-colors duration-200"
+              aria-label={`Open cart${totalItems > 0 ? ` (${totalItems} items)` : ''}`}
             >
-              <Search size={18} />
+              <ShoppingBag size={20} />
+              {totalItems > 0 && (
+                <motion.span
+                  key={totalItems}
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+                  className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-brand-800 text-cream text-[9px] font-jost flex items-center justify-center"
+                >
+                  {totalItems > 9 ? '9+' : totalItems}
+                </motion.span>
+              )}
             </button>
-            <button
-              className="text-brand-700 hover:text-brand-500 transition-colors duration-200"
-              aria-label="Wishlist"
-            >
-              <Heart size={18} />
-            </button>
-            <Link
-              href="/contact"
-              className="btn-primary text-xs py-2.5 px-5"
-            >
+
+            <Link href="/contact" className="btn-primary text-xs py-2.5 px-5">
               Enquire Now
             </Link>
           </div>
 
-          {/* Mobile Toggle */}
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="lg:hidden p-2 text-brand-800 hover:text-brand-500 transition-colors"
-            aria-label="Toggle menu"
-          >
-            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
+          {/* Mobile: Cart + Hamburger */}
+          <div className="lg:hidden flex items-center gap-3">
+            <button
+              onClick={openCart}
+              className="relative p-1 text-brand-800 hover:text-brand-500 transition-colors"
+              aria-label="Open cart"
+            >
+              <ShoppingBag size={20} />
+              {totalItems > 0 && (
+                <motion.span
+                  key={totalItems}
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+                  className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-brand-800 text-cream text-[8px] font-jost flex items-center justify-center"
+                >
+                  {totalItems > 9 ? '9+' : totalItems}
+                </motion.span>
+              )}
+            </button>
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="p-2 text-brand-800 hover:text-brand-500 transition-colors"
+              aria-label="Toggle menu"
+            >
+              {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+            </button>
+          </div>
         </div>
       </motion.header>
 

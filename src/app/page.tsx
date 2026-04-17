@@ -6,6 +6,12 @@ import OccasionSection from '@/components/OccasionSection';
 import TrustSection from '@/components/TrustSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import InstagramGrid from '@/components/InstagramGrid';
+import {
+  getHeroSlides,
+  getTestimonials,
+  getInstagramImages,
+  getBusinessSettings,
+} from '@/lib/content';
 
 export const metadata: Metadata = {
   title: 'Swara — Premium Women\'s Ethnic Wear',
@@ -14,15 +20,20 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
+  const slides       = getHeroSlides();
+  const testimonials = getTestimonials();
+  const igImages     = getInstagramImages();
+  const business     = getBusinessSettings();
+
   return (
     <div className="page-enter">
-      <HeroSection />
+      <HeroSection slides={slides} />
       <FeaturedCollections />
       <BestSellers />
       <OccasionSection />
       <TrustSection />
-      <TestimonialsSection />
-      <InstagramGrid />
+      <TestimonialsSection testimonials={testimonials} />
+      <InstagramGrid images={igImages} handle={business.instagram} />
     </div>
   );
 }

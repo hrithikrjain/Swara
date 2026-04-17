@@ -1,0 +1,9 @@
+{
+  "items": [
+    { "id": "t1", "name": "Priya Sharma",  "city": "Mumbai",     "role": "Bride",               "rating": 5, "review": "Swara made my wedding day absolutely magical. The bridal lehenga they crafted for me was beyond my imagination — every detail, every stitch was perfection. I received compliments throughout the day. Forever grateful!", "product": "Rani Heritage Bridal Lehenga", "avatar": "P" },
+    { "id": "t2", "name": "Deepa Nair",    "city": "Bangalore",  "role": "Regular Customer",    "rating": 5, "review": "I've been shopping at Swara for 3 years now and I can't imagine going anywhere else for ethnic wear. The quality is exceptional, the fabrics are luxurious, and the team is so helpful. My go-to store forever!", "product": "Royal Chikankari Kurti", "avatar": "D" },
+    { "id": "t3", "name": "Kavya Patel",   "city": "Ahmedabad",  "role": "Festival Shopper",    "rating": 5, "review": "Bought the Garba Nite chaniya choli for Navratri and WOW! The mirror work, the quality, the flare of the skirt — absolutely divine. I danced all 9 nights comfortably. Everyone kept asking where I bought it from!", "product": "Garba Nite Chaniya Choli", "avatar": "K" },
+    { "id": "t4", "name": "Ananya Mehta",  "city": "Delhi",      "role": "Fashion Enthusiast",  "rating": 5, "review": "The Indo-Western fusion set I ordered exceeded all expectations. The quality, stitching, and detailing are at par with high-end boutiques but at a fraction of the price. Swara is truly special!", "product": "Fusion Dhoti Pant Co-ord Set", "avatar": "A" },
+    { "id": "t5", "name": "Ritu Joshi",    "city": "Pune",       "role": "Mother of the Bride", "rating": 5, "review": "We ordered the entire bridal outfit set from Swara for my daughter's wedding. From the first consultation to the final delivery, everything was handled with such care and professionalism. Beautiful work!", "product": "Shahi Dulhan Bridal Set", "avatar": "R" }
+  ]
+}

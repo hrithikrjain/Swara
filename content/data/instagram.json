@@ -1,0 +1,12 @@
+{
+  "items": [
+    { "id": "ig1", "src": "/images/Ethnic Kurti/Kurti-1.jpeg",              "alt": "Ethnic Kurti",        "caption": "Elegance in every thread ✨" },
+    { "id": "ig2", "src": "/images/Indo Western/Indo-2-Front.jpeg",         "alt": "Indo Western",         "caption": "East meets West 🌸" },
+    { "id": "ig3", "src": "/images/Lehenga Choli/Lehenga-3-Front.jpeg",    "alt": "Lehenga Choli",        "caption": "Noor-E-Jahan vibes 💛" },
+    { "id": "ig4", "src": "/images/Bridal/bridal-1-back.jpeg",              "alt": "Bridal Back Detail",   "caption": "Back details that steal the show 👰" },
+    { "id": "ig5", "src": "/images/Navratri/Navratri-2-Front.jpeg",         "alt": "Navratri",             "caption": "Garba ready! 🎊" },
+    { "id": "ig6", "src": "/images/Indo Western/Indo-5-Front.jpeg",         "alt": "Indo Western Fusion",  "caption": "Power dressing, Indian roots 🦋" },
+    { "id": "ig7", "src": "/images/Ethnic Kurti/Kurti-6-Front.jpeg",        "alt": "Chikankari Kurti",     "caption": "Lucknowi magic 🤍" },
+    { "id": "ig8", "src": "/images/Lehenga Choli/Lehenga-4-Front.jpeg",    "alt": "Blossom Lehenga",      "caption": "Fresh as morning blossoms 🌺" }
+  ]
+}

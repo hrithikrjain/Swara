@@ -4,17 +4,18 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import AnimatedSection, { StaggerContainer, StaggerItem } from '@/components/AnimatedSection';
 import ProductCard from '@/components/ProductCard';
-import { categories, getProductsByCategory } from '@/lib/products';
+import { getAllCategories, getProductsByCategory } from '@/lib/content';
 
 interface Props {
   params: { category: string };
 }
 
 export async function generateStaticParams() {
-  return categories.map((cat) => ({ category: cat.slug }));
+  return getAllCategories().map((cat) => ({ category: cat.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const categories = getAllCategories();
   const cat = categories.find((c) => c.slug === params.category);
   if (!cat) return { title: 'Not Found' };
   return {
@@ -24,6 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default function CategoryPage({ params }: Props) {
+  const categories = getAllCategories();
   const cat = categories.find((c) => c.slug === params.category);
   if (!cat) notFound();
 

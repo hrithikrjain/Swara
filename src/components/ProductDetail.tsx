@@ -4,16 +4,20 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Star, Truck, RefreshCw, Shield, ChevronDown } from 'lucide-react';
+import { Star, Truck, RefreshCw, Shield, ChevronDown, ShoppingBag, Check } from 'lucide-react';
 import { StaggerContainer, StaggerItem } from './AnimatedSection';
 import AnimatedSection from './AnimatedSection';
 import ProductCard from './ProductCard';
 import { Product, products, WHATSAPP_NUMBER, WHATSAPP_MESSAGE } from '@/lib/products';
+import { useCart } from '@/context/CartContext';
 
 export default function ProductDetail({ product }: { product: Product }) {
   const [activeImage, setActiveImage] = useState(0);
   const [selectedSize, setSelectedSize] = useState('');
   const [openAccordion, setOpenAccordion] = useState<string | null>('details');
+  const [cartAdded, setCartAdded] = useState(false);
+
+  const { addItem } = useCart();
 
   const relatedProducts = products
     .filter((p) => p.category === product.category && p.id !== product.id)
@@ -25,6 +29,13 @@ export default function ProductDetail({ product }: { product: Product }) {
 
   const toggleAccordion = (key: string) =>
     setOpenAccordion((prev) => (prev === key ? null : key));
+
+  const handleAddToCart = () => {
+    if (!selectedSize) return;
+    addItem(product, selectedSize);
+    setCartAdded(true);
+    setTimeout(() => setCartAdded(false), 2500);
+  };
 
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE(product.name)}${
     selectedSize ? encodeURIComponent(` (Size: ${selectedSize})`) : ''
@@ -173,6 +184,33 @@ export default function ProductDetail({ product }: { product: Product }) {
 
             {/* CTAs */}
             <div className="space-y-3 pt-2">
+              {/* Add to Cart — primary action */}
+              <motion.button
+                onClick={handleAddToCart}
+                disabled={!selectedSize}
+                whileTap={selectedSize ? { scale: 0.98 } : {}}
+                className={`flex items-center justify-center gap-3 w-full font-jost font-medium text-sm tracking-widest uppercase py-4 transition-all duration-300 ${
+                  cartAdded
+                    ? 'bg-green-500 text-white shadow-[0_4px_20px_rgba(34,197,94,0.35)]'
+                    : selectedSize
+                    ? 'bg-brand-900 text-cream hover:bg-brand-700 shadow-[0_4px_20px_rgba(92,45,14,0.25)]'
+                    : 'bg-brand-100 text-brand-400 cursor-not-allowed'
+                }`}
+              >
+                {cartAdded ? (
+                  <>
+                    <Check size={18} />
+                    Added to Cart!
+                  </>
+                ) : (
+                  <>
+                    <ShoppingBag size={18} />
+                    {selectedSize ? 'Add to Cart' : 'Select a Size First'}
+                  </>
+                )}
+              </motion.button>
+
+              {/* WhatsApp Enquiry */}
               <a
                 href={whatsappUrl}
                 target="_blank"

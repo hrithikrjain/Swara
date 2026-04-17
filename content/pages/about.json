@@ -1,0 +1,43 @@
+{
+  "heroImage": "/images/Shop Images/Shop front pic.webp",
+  "headline": "Born from Passion,",
+  "headlineSub": "Built on Tradition",
+  "story1": "Swara was born from a simple but powerful belief: every Indian woman deserves to feel extraordinary in her ethnicity. We started as a small boutique with a big dream — to bring together the finest Indian craftsmanship and make it accessible to every woman who cherishes her heritage.",
+  "story2": "Today, Swara is a beloved ethnic wear destination where brides find their dream lehengas, mothers discover elegant kurtis, and young women explore the magic of Indo-Western fusion. Every piece in our collection tells a story — of skilled hands, rich traditions, and the timeless beauty of Indian culture.",
+  "story3": "We believe that fashion is not just about what you wear — it's about how it makes you feel. At Swara, we want you to feel confident, celebrated, and beautiful.",
+  "stats": [
+    { "num": "500+", "label": "Happy Clients" },
+    { "num": "5+",   "label": "Years in Business" },
+    { "num": "20+",  "label": "Unique Styles" },
+    { "num": "100%", "label": "Authentic Crafts" }
+  ],
+  "values": [
+    {
+      "icon": "Heart",
+      "title": "Crafted with Love",
+      "desc": "Every piece that leaves our store has been created with genuine care, attention to detail, and a deep respect for the woman who will wear it."
+    },
+    {
+      "icon": "Award",
+      "title": "Uncompromising Quality",
+      "desc": "We source only the finest fabrics and work with skilled artisans who have spent decades perfecting their craft."
+    },
+    {
+      "icon": "Users",
+      "title": "Community First",
+      "desc": "Swara is more than a brand — it's a community of women who celebrate their heritage and individuality every single day."
+    },
+    {
+      "icon": "Star",
+      "title": "Heritage Preserved",
+      "desc": "We are proud custodians of India's textile traditions, from Chikankari to Zardosi, Bandhej to Banarasi."
+    }
+  ],
+  "storeImages": [
+    "/images/Shop Images/shop inside pics.png",
+    "/images/Shop Images/shop inside pics 2.png",
+    "/images/Shop Images/swara shopping bags.webp"
+  ],
+  "visitCtaTitle": "Experience Swara in Person",
+  "visitCtaText": "Step into our store and let our styling experts help you find your perfect look. We'd love to meet you!"
+}

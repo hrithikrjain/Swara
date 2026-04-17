@@ -1,0 +1,40 @@
+{
+  "items": [
+    {
+      "id": "slide-1",
+      "image": "/images/Bridal/bridal-1-front.jpeg",
+      "label": "Bridal Collection",
+      "headline": "Where Tradition\nMeets Grace",
+      "sub": "Exquisite bridal wear crafted for the modern Indian bride. Every stitch, a story.",
+      "ctaLabel": "Explore Bridal",
+      "ctaHref": "/collections/bridal"
+    },
+    {
+      "id": "slide-2",
+      "image": "/images/Lehenga Choli/Lehenga-1.jpeg",
+      "label": "Lehenga Choli",
+      "headline": "Timeless Elegance,\nReborn",
+      "sub": "Heritage craftsmanship meets contemporary silhouettes for celebrations that last a lifetime.",
+      "ctaLabel": "Shop Lehengas",
+      "ctaHref": "/collections/lehenga-choli"
+    },
+    {
+      "id": "slide-3",
+      "image": "/images/Indo Western/Indo-1-Front.jpeg",
+      "label": "Indo Western",
+      "headline": "East Meets West\nin Perfect Harmony",
+      "sub": "Bold, contemporary, unmistakably Indian. Fusion fashion for the woman who leads.",
+      "ctaLabel": "View Indo Western",
+      "ctaHref": "/collections/indo-western"
+    },
+    {
+      "id": "slide-4",
+      "image": "/images/Navratri/Navratri-1-Front.jpeg",
+      "label": "Navratri Special",
+      "headline": "Dance Into\nThe Celebration",
+      "sub": "Vibrant chaniya cholis crafted for every spin, twirl, and garba night.",
+      "ctaLabel": "Shop Navratri",
+      "ctaHref": "/collections/navratri"
+    }
+  ]
+}
